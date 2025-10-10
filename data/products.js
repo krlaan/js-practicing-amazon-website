@@ -71,12 +71,14 @@ export function loadProductsFetch() {
             if (productDetails.type === "clothing") {
                 return new Clothing(productDetails);
             }
-
             return new Product(productDetails);
         });
-
         console.log("load products");
-    })
+
+    }).catch((error) => {
+            console.log("unexpected error: " + error);
+        })
+
     return promise;
 }
 
@@ -97,10 +99,15 @@ export function loadProducts(fun) {
        fun();
     })
 
+    xhr.addEventListener("error", (e) => {
+        console.log("unexpected error: " + e);
+    })
+
     xhr.open("GET", "https://supersimplebackend.dev/products");
     xhr.send();
 }
 loadProducts();
+
 /*
 export const products = [
     {
